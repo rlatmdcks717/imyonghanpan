@@ -1,2 +1,11 @@
+# 빌드 중간 산출물
 _source/artifact.html
 __pycache__/
+
+# 저작권 때문에 공개 저장소에 올리지 않는 원본 (교육과정 HWP, 기출문제 PDF)
+*.hwp
+*.hwpx
+*.pdf
+
+# macOS
+.DS_Store
