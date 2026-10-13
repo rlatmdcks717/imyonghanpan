@@ -71,6 +71,9 @@ svg.i{width:1em;height:1em;vertical-align:-.13em;flex:none}
 .logo .main{font-family:var(--f-display);font-size:clamp(68px,22vw,108px);line-height:1;color:var(--green);text-shadow:0 6px 0 var(--green-d);margin-top:12px}
 .tagline{color:var(--muted);font-size:16px;line-height:1.65;font-weight:500}
 .ts .btn{max-width:320px;font-size:18px;padding:15px}
+/* 진입 화면은 한 화면에 딱 맞으므로 스크롤·당겨짐(바운스)을 막음. 화면이 너무 낮으면 버튼이 잘리지 않게 풀어 줌 */
+body.on-title{overflow:hidden;overscroll-behavior:none}
+@media (max-height:520px){body.on-title{overflow:auto;overscroll-behavior:auto}}
 
 .credits{position:fixed;inset:0;z-index:50;background:#0F1A14;color:#F1F7EE;overflow-y:auto;display:flex;flex-direction:column;align-items:center;cursor:pointer;animation:cfade .35s ease}
 @keyframes cfade{from{opacity:0}to{opacity:1}}
@@ -1613,6 +1616,7 @@ function render(){
   if(TT.on&&!(S.view==="room"&&S.subject===TT.subj))ttsStop();
   setTimeout(()=>{renderTtsBar();ttsMark();},0);
   document.body.classList.toggle("wide",S.view==="room"&&S.subject==="law"&&S.tab==="cmp");
+  document.body.classList.toggle("on-title",S.view==="title");
   if(S.view==="title")return titleScreen();
   if(S.view==="lobby")return lobby();
   if(S.view==="play")return play();
