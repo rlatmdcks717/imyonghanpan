@@ -13,6 +13,10 @@ for k,f in MAP.items():
     assert k in body, k
     body = body.replace(k, open(D(f),encoding='utf-8').read().strip())
 open(os.path.join(HERE,'artifact.html'),'w',encoding='utf-8').write(body)   # 클로드 아티팩트용 본문
+_ih = hashlib.md5()
+for f in sorted(os.listdir(os.path.join(ROOT,'icons'))):
+    _ih.update(open(os.path.join(ROOT,'icons',f),'rb').read())
+IV = _ih.hexdigest()[:6]   # 아이콘 버전표: 아이콘이 바뀌면 주소가 바뀌어 폰이 새로 받음
 ver = re.search(r'version:"(v[\d.]+)', body).group(1)
 head = '''<!doctype html>
 <html lang="ko">
@@ -22,13 +26,14 @@ head = '''<!doctype html>
 <meta name="theme-color" content="#58CC02">
 <meta name="description" content="책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/icon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-32.png?v='+IV+'" sizes="32x32">
+<link rel="apple-touch-icon" href="icons/icon-180.png?v='+IV+'">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="임용한판">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 '''
+head = head.replace("'+IV+'", IV)
 i = body.index('</style>') + len('</style>')
 html = head + body[:i] + '\n</head>\n<body>\n' + body[i:] + '''
 <script>
@@ -40,7 +45,7 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.s
 open(os.path.join(ROOT,'index.html'),'w',encoding='utf-8').write(html)
 json.dump({"name":"임용한판","short_name":"임용한판","description":"책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부",
  "lang":"ko","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#FFFFFF","theme_color":"#58CC02",
- "icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]},
+ "icons":[{"src":"icons/icon-192.png?v="+IV,"sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png?v="+IV,"sizes":"512x512","type":"image/png"},{"src":"icons/icon-maskable-512.png?v="+IV,"sizes":"512x512","type":"image/png","purpose":"maskable"}]},
  open(os.path.join(ROOT,'manifest.webmanifest'),'w',encoding='utf-8'),ensure_ascii=False,indent=1)
 _h = hashlib.md5(html.encode())
 for f in sorted(os.listdir(os.path.join(ROOT,'icons'))):   # 아이콘이 바뀌어도 새 버전으로 인식
@@ -48,8 +53,8 @@ for f in sorted(os.listdir(os.path.join(ROOT,'icons'))):   # 아이콘이 바뀌
 h = _h.hexdigest()[:8]
 sw = '''// 임용한판 서비스 워커: 처음 열 때 필수 파일을 저장해 두고, 인터넷이 없어도 열리게 함
 const CACHE="hanpan-%s-%s";
-const CORE=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","icons/icon-32.png"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+const CORE=["./","index.html","manifest.webmanifest"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE.map(u=>new Request(u,{cache:"reload"})))).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener("fetch",e=>{
   const req=e.request;if(req.method!=="GET")return;
