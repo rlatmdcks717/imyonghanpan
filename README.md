@@ -2,7 +2,9 @@
 
 책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부 앱입니다.
 
-- 만든 사람: 새얼학교 교사 김승찬
-- 앱 주소: GitHub Pages에서 열립니다 (Settings → Pages).
+- 만든 사람: 새얼학교 교사 김승찬 (@keemseungchann_)
+- 앱 주소: https://rlatmdcks717.github.io/imyonghanpan/
 
 휴대폰이나 PC 브라우저에서 열고 "홈 화면에 추가" 또는 "앱 설치"를 누르면 앱처럼 쓸 수 있어요.
+
+원본 코드와 데이터는 `_source` 폴더에 있습니다.
