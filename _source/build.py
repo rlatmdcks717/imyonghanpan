@@ -1,4 +1,4 @@
-# 임용 한 판 빌드 스크립트
+# 임용한판 빌드 스크립트
 # template.html + data/*.json  ->  저장소 맨 위의 index.html, sw.js, manifest.webmanifest
 # 사용법: python3 _source/build.py   (저장소 폴더에서 실행)
 import os, re, json, hashlib
@@ -26,7 +26,7 @@ head = '''<!doctype html>
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="임용 한 판">
+<meta name="apple-mobile-web-app-title" content="임용한판">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 '''
 i = body.index('</style>') + len('</style>')
@@ -38,7 +38,7 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.s
 </html>
 '''
 open(os.path.join(ROOT,'index.html'),'w',encoding='utf-8').write(html)
-json.dump({"name":"임용 한 판","short_name":"임용 한 판","description":"책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부",
+json.dump({"name":"임용한판","short_name":"임용한판","description":"책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부",
  "lang":"ko","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#FFFFFF","theme_color":"#58CC02",
  "icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]},
  open(os.path.join(ROOT,'manifest.webmanifest'),'w',encoding='utf-8'),ensure_ascii=False,indent=1)
@@ -46,7 +46,7 @@ _h = hashlib.md5(html.encode())
 for f in sorted(os.listdir(os.path.join(ROOT,'icons'))):   # 아이콘이 바뀌어도 새 버전으로 인식
     _h.update(open(os.path.join(ROOT,'icons',f),'rb').read())
 h = _h.hexdigest()[:8]
-sw = '''// 임용 한 판 서비스 워커: 처음 열 때 필수 파일을 저장해 두고, 인터넷이 없어도 열리게 함
+sw = '''// 임용한판 서비스 워커: 처음 열 때 필수 파일을 저장해 두고, 인터넷이 없어도 열리게 함
 const CACHE="hanpan-%s-%s";
 const CORE=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","icons/icon-32.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
