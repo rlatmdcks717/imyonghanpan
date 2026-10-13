@@ -25,6 +25,7 @@ head = '''<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#58CC02">
 <meta name="color-scheme" content="only light">
+<script>try{var t=localStorage.getItem("imyong_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.dataset.theme=t;}catch(e){}</script>
 <meta name="description" content="책을 펼치기 어려운 날에도 한 문제부터 시작하는 특수 임용 공부">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-32.png?v='+IV+'" sizes="32x32">
