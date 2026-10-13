@@ -22,6 +22,7 @@
 html{height:100%}
 body{min-height:100%}
 *{box-sizing:border-box}
+html{touch-action:manipulation} /* 더블탭 확대만 막고 핀치줌은 그대로 둠 */
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:14px 40px}
 body.has-bottom .wrap{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
