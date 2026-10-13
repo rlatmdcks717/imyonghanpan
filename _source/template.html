@@ -1661,7 +1661,7 @@ function showCredits(){
 function lobby(){
   setBottom(false);
   app.innerHTML=`
-  <div class="top"><button class="icon-btn" id="toTitle" aria-label="타이틀로 돌아가기">${IC.back}</button><span class="t"></span>${starChip()}${themeBtn()}</div>
+  <div class="top"><span class="t"></span>${starChip()}${themeBtn()}</div>
   <div><h2 class="h-big">어떤 과목을 한 판 할까요?</h2><p class="sub-txt">과목을 고르면 스테이지가 열려요.</p></div>
   <nav class="subjects" aria-label="과목">${SUBJECTS.map(s=>`
     <button class="subj ${s.off?"off":""}" data-s="${s.id}" ${s.off?'aria-disabled="true"':""} style="${s.col?`--c:var(--${s.col});--d:var(--${s.col}-d)`:""}">
@@ -1670,7 +1670,6 @@ function lobby(){
       ${s.off?"":`<span class="arrow">${IC.chev}</span>`}
     </button>`).join("")}</nav>
   <p class="note">시험용 버전이에요. 별과 학습 기록은 이 기기에만 저장돼요.</p>`;
-  app.querySelector("#toTitle").onclick=()=>{S.view="title";render();};
   app.querySelectorAll(".subj:not(.off)").forEach(b=>b.onclick=()=>{S.view="room";S.cat=null;S.subject=b.dataset.s;S.tab=S.subject==="sped"?"past":TABS[S.subject][0][0];resetRoom();render();});
 }
 function resetRoom(){Object.assign(S,{shown:{},idx:0,open:false,fillInput:"",fillResult:null});}
