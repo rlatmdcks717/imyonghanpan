@@ -42,7 +42,10 @@ json.dump({"name":"임용 한 판","short_name":"임용 한 판","description":"
  "lang":"ko","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","background_color":"#FFFFFF","theme_color":"#58CC02",
  "icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]},
  open(os.path.join(ROOT,'manifest.webmanifest'),'w',encoding='utf-8'),ensure_ascii=False,indent=1)
-h = hashlib.md5(html.encode()).hexdigest()[:8]
+_h = hashlib.md5(html.encode())
+for f in sorted(os.listdir(os.path.join(ROOT,'icons'))):   # 아이콘이 바뀌어도 새 버전으로 인식
+    _h.update(open(os.path.join(ROOT,'icons',f),'rb').read())
+h = _h.hexdigest()[:8]
 sw = '''// 임용 한 판 서비스 워커: 처음 열 때 필수 파일을 저장해 두고, 인터넷이 없어도 열리게 함
 const CACHE="hanpan-%s-%s";
 const CORE=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","icons/icon-32.png"];

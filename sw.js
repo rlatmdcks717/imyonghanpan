@@ -1,5 +1,5 @@
 // 임용 한 판 서비스 워커: 처음 열 때 필수 파일을 저장해 두고, 인터넷이 없어도 열리게 함
-const CACHE="hanpan-v0.56-9d3f7980";
+const CACHE="hanpan-v0.56-f5d8e570";
 const CORE=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","icons/icon-32.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
