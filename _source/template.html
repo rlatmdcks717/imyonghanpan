@@ -1658,7 +1658,7 @@ function titleScreen(){document.body.classList.remove("wide");
   app.querySelector(".logo .main").onclick=()=>{taps++;clearTimeout(timer);timer=setTimeout(()=>taps=0,2000);if(taps>=5){taps=0;showCredits();}};
 }
 const CREDITS={
-  app:"임용한판",version:"v0.58 시험판",first:"2026. 10. 7.",updated:"2026. 10. 13.",
+  app:"임용한판",version:"v0.59 시험판",first:"2026. 10. 7.",updated:"2026. 10. 13.",
   maker:["새얼학교 교사 김승찬"],makerHandle:"@keemseungchann_",
   // Thanks to: 역할(role)별로 이름과 계정을 적어요 (같은 역할 안에서는 가나다순으로 자동 정렬)
   thanks:[
@@ -1817,7 +1817,7 @@ function spedArea(){
   return `${spModeSeg()}
   <div><h2 class="h-big">영역별 기출문제</h2><p class="sub-txt">영역을 고르면 그 영역 문항만 모아서 볼 수 있어요.</p></div>
   <div class="spareas">${PASTQ.areas.map(a=>{const c=cnt(a);if(!c.main&&!c.also)return "";return `<button class="sparea" data-sparea="${esc(a)}"><b>${esc(a)}</b><span>${c.main}문항${c.also?` <small>+함께 ${c.also}</small>`:""}</span></button>`;}).join("")}</div>
-  <p class="src">${PASTQ.qs.length}문항(2025·2026학년도 전공 A·B)을 Claude가 문항별로 읽고 중심 영역 하나로 나눴어요. 여러 영역이 섞인 문항은 ‘함께’로 따로 셌어요. 나누는 기준은 교재나 강사마다 다를 수 있어요.</p>`;
+  <p class="src">${PASTQ.qs.length}문항(2022~2026학년도 전공 A·B)을 Claude가 문항별로 읽고 중심 영역 하나로 나눴어요. 여러 영역이 섞인 문항은 ‘함께’로 따로 셌어요. 나누는 기준은 교재나 강사마다 다를 수 있어요.</p>`;
 }
 const spExam=id=>SPED_PAST.flatMap(y=>y.exams.map(e=>({...e,year:y.year}))).find(e=>e.id===id);
 function spedPast(){
