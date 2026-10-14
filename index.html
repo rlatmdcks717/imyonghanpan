@@ -778,6 +778,18 @@ function wireBraille(){
   const bk=$("#bBack");if(bk)bk.onclick=()=>{S.bt.seq.pop();S.bt.pick=null;render();};
   const al=$("#bAll");if(al)al.onclick=()=>{S.bt={cur:"",seq:[],pick:null};render();};
 }
+/* PC: Esc 키로 뒤로 가기 */
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape"||e.isComposing)return;
+  const cr=document.querySelector(".credits");if(cr){e.preventDefault();cr.remove();return;}
+  const t=e.target;
+  // 글을 쓰는 칸에 있으면 먼저 칸에서만 빠져나옴 (쓰던 내용 보호). 한 번 더 누르면 뒤로 가요.
+  if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.tagName==="SELECT")&&t.type!=="checkbox"){e.preventDefault();t.blur();return;}
+  for(const sel of ["#spBackArea","#spBack","#spAreas","#quit","#toList","#back","#toTitle"]){
+    const b=document.querySelector(sel);
+    if(b&&!b.disabled&&b.offsetParent!==null){e.preventDefault();b.click();window.scrollTo(0,0);return;}
+  }
+});
 /* 점자 타자기 키보드 입력 */
 const KEYDOT={KeyF:"1",KeyD:"2",KeyS:"3",KeyJ:"4",KeyK:"5",KeyL:"6"};
 let held=new Set(),chord="";
