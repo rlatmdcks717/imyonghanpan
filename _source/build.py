@@ -7,7 +7,7 @@ ROOT = os.path.dirname(HERE)
 D = lambda f: os.path.join(HERE, 'data', f)
 MAP = {'__FS__':'fs.json','__NUM__':'num.json','__EN__':'en.json','__LAW__':'law.json','__DOCS__':'docs.json',
        '__CMP__':'cmpmap.json','__LQ__':'quiz_law.json','__CUR__':'curr2.json','__PAST__':'past.json',
-       '__PASTQ__':'pastq.json','__PASTHL__':'hl.json'}
+       '__PASTQ__':'pastq.json','__PASTHL__':'hl.json','__KEYQ__':'keyq.json'}
 body = open(os.path.join(HERE,'template.html'),encoding='utf-8').read()
 for k,f in MAP.items():
     assert k in body, k

@@ -516,6 +516,32 @@ input.cb.tq{width:5em;text-align:right;margin:0}
 .vh{position:absolute;left:-9999px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+
+/* ===== 특수교육학 키워드 문제 ===== */
+.kqarea .best{font-size:12px;color:var(--green-d);font-weight:700}
+.kqtop{display:flex;align-items:center;gap:10px}
+.kqtop .prog{flex:1}
+.kqtop .cnt{font-size:14px;font-weight:700;color:var(--muted);white-space:nowrap}
+.kqcard{border:2px solid var(--line);border-radius:18px;padding:18px 16px;background:var(--bg)}
+.kqcard .tag{font-size:12.5px;font-weight:700;color:var(--pink-d)}
+.kqcard h3{font-size:18.5px;line-height:1.55;margin-top:6px;word-break:keep-all;font-weight:700}
+.kqopts{display:flex;flex-direction:column;gap:10px}
+.kqopt{display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:12px 14px;background:var(--bg);font:inherit;font-size:16.5px;color:var(--ink);width:100%}
+.kqopt .n{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted)}
+.kqopt:not(:disabled):active{transform:translateY(2px);border-bottom-width:2px}
+.kqopt.ok{border-color:var(--green);background:var(--green-l);color:var(--green-d);font-weight:700}
+.kqopt.ok .n{border-color:var(--green);background:var(--green);color:#fff}
+.kqopt.no{border-color:var(--red);background:var(--red-l);color:var(--red-d)}
+.kqopt.no .n{border-color:var(--red);background:var(--red);color:#fff}
+.kqopt:disabled{cursor:default}
+.kqexp{border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.6;background:var(--wash);border:2px solid var(--line)}
+.kqexp b{display:block;margin-bottom:4px;font-size:16px}
+.kqexp.ok b{color:var(--green-d)} .kqexp.no b{color:var(--red-d)}
+.kqscore{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;padding:10px 0}
+.kqscore .kqbig{font-family:var(--f-display);font-size:48px;color:var(--green)}
+.kqwrong{display:flex;flex-direction:column;gap:8px}
+.kqwrong div{border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.5}
+.kqwrong div em{font-style:normal;font-weight:700;color:var(--green-d)}
 /* ===== 다크모드 (오른쪽 위 해/달 버튼으로 전환) ===== */
 .themebtn{flex:none;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:40px;height:40px;border-radius:12px;display:grid;place-items:center;padding:0;box-shadow:0 3px 0 var(--line)}
 .themebtn:active{transform:translateY(3px);box-shadow:none}
@@ -606,7 +632,7 @@ const SUBJECTS=[
   {id:"braille",g:"점",name:"점자",desc:"점자표 · 찍어 보기 · 스테이지",col:"purple"},
   {id:"sign",g:"수",name:"수어",desc:"한글·영어 지문자, 지숫자 · 도감 · 더 배우기",col:"green"}
 ];
-const TABS={edu:[["emind","마인드맵","mind"],["ekey","기출 키워드","cards"],["eq","연습문제","pencil"]],curr:[["cread","총론 읽기","book"],["ctable","시수표 외우기","cards"],["cblank","빈칸 채우기","pencil"]],sign:[["stage","스테이지","path"],["dex","지문자 도감","book"],["more","더 배우기","ext"]],sped:[["mind","마인드맵","mind"],["area","영역별 보기","cards"],["past","기출문제","file"]],braille:[["stage","스테이지","path"],["chart","점자표","book"],["type","찍어 보기","pencil"]],law:[["read","법 읽기","book"],["cmp","3단 비교","cards"],["blank","빈칸 채우기","pencil"],["exam","연습문제","path"]]};
+const TABS={edu:[["emind","마인드맵","mind"],["ekey","기출 키워드","cards"],["eq","연습문제","pencil"]],curr:[["cread","총론 읽기","book"],["ctable","시수표 외우기","cards"],["cblank","빈칸 채우기","pencil"]],sign:[["stage","스테이지","path"],["dex","지문자 도감","book"],["more","더 배우기","ext"]],sped:[["mind","마인드맵","mind"],["area","영역별 보기","cards"],["kq","키워드 문제","pencil"],["past","기출문제","file"]],braille:[["stage","스테이지","path"],["chart","점자표","book"],["type","찍어 보기","pencil"]],law:[["read","법 읽기","book"],["cmp","3단 비교","cards"],["blank","빈칸 채우기","pencil"],["exam","연습문제","path"]]};
 
 /* ===== 특수교육학 > 청각장애 샘플 (검토 전) ===== */
 const MCST='문화체육관광부·국립국어원 「보이는 언어 수어에 대해 알려드려요」';
@@ -766,7 +792,7 @@ document.addEventListener("keydown",e=>{
   const t=e.target;
   // 글을 쓰는 칸에 있으면 먼저 칸에서만 빠져나옴 (쓰던 내용 보호). 한 번 더 누르면 뒤로 가요.
   if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.tagName==="SELECT")&&t.type!=="checkbox"){e.preventDefault();t.blur();return;}
-  for(const sel of ["#spBackArea","#spBack","#spAreas","#quit","#toList","#back","#toTitle"]){
+  for(const sel of ["#kqBack","#spBackArea","#spBack","#spAreas","#quit","#toList","#back","#toTitle"]){
     const b=document.querySelector(sel);
     if(b&&!b.disabled&&b.offsetParent!==null){e.preventDefault();b.click();window.scrollTo(0,0);return;}
   }
@@ -1696,7 +1722,7 @@ function room(){
   <div class="top"><button class="icon-btn" id="back" aria-label="과목 선택으로">${IC.back}</button><span class="t">${subj.name}</span>${starChip()}${themeBtn()}</div>
   ${body}
   <nav class="bnav" role="tablist"><div class="in">${TABS[S.subject].map(([k,l,ic])=>`<button role="tab" aria-selected="${S.tab===k}" data-t="${k}">${IC[ic]}<span>${l}</span></button>`).join("")}</div></nav>`;
-  wireRoom();if(S.subject==="braille")wireBraille();if(S.subject==="law"){wireLaw();wireCmp();wireLq();}if(S.subject==="curr")wireCurr();if(S.subject==="sped")wireSped();document.body.classList.toggle("wide",S.view==="room"&&S.subject==="law"&&S.tab==="cmp");
+  wireRoom();if(S.subject==="braille")wireBraille();if(S.subject==="law"){wireLaw();wireCmp();wireLq();}if(S.subject==="curr")wireCurr();if(S.subject==="sped"){wireSped();wireKq();}document.body.classList.toggle("wide",S.view==="room"&&S.subject==="law"&&S.tab==="cmp");
 }
 
 const CATS=[
@@ -1828,6 +1854,7 @@ function wireSped(){
 }
 function spedSoon(){
   if(S.tab==="past")return spedPast();
+  if(S.tab==="kq")return spedKq();
   const T={
     mind:{ic:IC.mind,h:"마인드맵",p:"특수교육학 전체 흐름을 한 장의 지도처럼 볼 수 있게 만들고 있어요. 큰 줄기에서 세부 개념으로 펼쳐 보는 방식이 될 거예요."},
     area:{ic:IC.cards,h:"영역별 보기",p:"영역을 골라 그 영역의 핵심 내용을 공부하는 곳이에요. 영역마다 무엇을 넣을지 정하고 있어요."},
@@ -1842,6 +1869,62 @@ function spedSoon(){
   ${S.tab==="area"?`<section class="sect"><h3>열릴 예정인 영역</h3><div class="soonchips">${SPED_AREAS.map(a=>`<span>${IC.lock}${a}</span>`).join("")}</div><p class="src">영역 구성은 바뀔 수 있어요.</p></section>`:""}
 `;
 }
+
+
+/* ===== 특수교육학: 키워드 문제 (Claude가 개념을 골라 새로 쓴 4지선다) ===== */
+const KEYQ = __KEYQ__;
+S.kq={area:null,run:null};
+const KQ_KEY="imyong_kq";
+let kqBest={};try{kqBest=JSON.parse(localStorage.getItem(KQ_KEY)||"{}")||{};}catch(e){}
+const kqShuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const kqArea=n=>KEYQ.areas.find(a=>a.area===n);
+function kqStart(area,only){const A=kqArea(area);const idx=only&&only.length?only:A.qs.map((_,i)=>i);
+  S.kq={area,run:{order:kqShuffle(idx),opts:{},i:0,pick:null,right:0,wrong:[],retry:!!(only&&only.length)}};
+  S.kq.run.order.forEach(k=>S.kq.run.opts[k]=kqShuffle([0,1,2,3]));}
+function spedKq(){
+  const R=S.kq.run;
+  if(!S.kq.area||!R){
+    const ready=KEYQ.areas.map(a=>a.area),rest=SPED_AREAS.filter(a=>!ready.includes(a));
+    return `<div><h2 class="h-big">키워드 문제</h2><p class="sub-txt">영역을 고르면 핵심 개념을 4지선다로 풀어요. 문제 순서와 보기 순서는 매번 섞여요.</p></div>
+    <div class="spareas">${KEYQ.areas.map(a=>{const b=kqBest[a.area];return `<button class="sparea kqarea" data-kqarea="${esc(a.area)}"><b>${esc(a.area)}</b><span>${a.qs.length}문제</span>${b?`<small class="best">최고 ${b.best} / ${b.total}</small>`:""}</button>`;}).join("")}</div>
+    ${rest.length?`<section class="sect"><h3>만들고 있는 영역</h3><div class="soonchips">${rest.map(a=>`<span>${IC.lock}${esc(a)}</span>`).join("")}</div></section>`:""}
+    <p class="src">문제는 Claude가 출제 개념을 골라 새로 쓴 연습용이에요. 강의·교재마다 용어가 조금 다를 수 있어요.</p>`;}
+  const A=kqArea(S.kq.area),N=R.order.length;
+  if(R.i>=N){const pct=Math.round(R.right/N*100);
+    return `<div class="sphead"><button class="btn ghost spback" id="kqBack">‹ 영역 목록</button></div>
+    <div class="kqscore"><span class="src">${esc(A.area)}${R.retry?" · 틀린 문제 다시":""}</span><span class="kqbig">${R.right} / ${N}</span><span class="sub-txt">${pct>=90?"아주 좋아요!":pct>=70?"잘했어요. 틀린 것만 한 번 더 볼까요?":"틀린 문제를 다시 풀어 보면 금방 늘어요."}</span></div>
+    ${R.wrong.length?`<div class="row2"><button class="btn red" id="kqRetry">틀린 ${R.wrong.length}문제 다시</button><button class="btn ghost" id="kqAgain">처음부터 다시</button></div>
+    <section class="sect"><h3>틀린 문제</h3><div class="kqwrong">${R.wrong.map(k=>{const q=A.qs[k];return `<div>${esc(q.q)}<br>→ <em>${esc(q.o[q.a])}</em></div>`;}).join("")}</div></section>`:`<button class="btn" id="kqAgain">처음부터 다시</button>`}`;}
+  const k=R.order[R.i],q=A.qs[k],oo=R.opts[k],ans=R.pick!==null;
+  return `<div class="sphead"><button class="btn ghost spback" id="kqBack">‹ 영역 목록</button></div>
+  <div class="kqtop"><div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="${N}" aria-valuenow="${R.i}"><i style="width:${Math.max(4,R.i/N*100)}%"></i></div><span class="cnt">${R.i+1} / ${N}</span></div>
+  <div class="kqcard"><span class="tag">${esc(A.area)}</span><h3>${esc(q.q)}</h3></div>
+  <div class="kqopts">${oo.map((oi,n)=>{const cls=ans?(oi===q.a?"ok":oi===R.pick?"no":""):"";return `<button class="kqopt ${cls}" data-kqopt="${oi}" ${ans?"disabled":""}><span class="n">${n+1}</span><span>${esc(q.o[oi])}</span></button>`;}).join("")}</div>
+  ${ans?`<div class="kqexp ${R.pick===q.a?"ok":"no"}"><b>${R.pick===q.a?"정답이에요!":"정답: "+esc(q.o[q.a])}</b>${esc(q.e)}</div>
+  <button class="btn" id="kqNext">${R.i+1>=N?"결과 보기":"다음 문제"}</button>`:""}`;
+}
+function wireKq(){
+  const $=s=>app.querySelector(s);
+  app.querySelectorAll("[data-kqarea]").forEach(b=>b.onclick=()=>{kqStart(b.dataset.kqarea);render();scrollTo(0,0);});
+  const bk=$("#kqBack");if(bk)bk.onclick=()=>{S.kq={area:null,run:null};render();scrollTo(0,0);};
+  app.querySelectorAll("[data-kqopt]").forEach(b=>b.onclick=()=>kqPick(+b.dataset.kqopt));
+  const nx=$("#kqNext");if(nx){nx.onclick=kqNext;nx.focus({preventScroll:true});}
+  const rt=$("#kqRetry");if(rt)rt.onclick=()=>{kqStart(S.kq.area,S.kq.run.wrong);render();scrollTo(0,0);};
+  const ag=$("#kqAgain");if(ag)ag.onclick=()=>{kqStart(S.kq.area);render();scrollTo(0,0);};
+}
+function kqPick(oi){const R=S.kq.run;if(!R||R.pick!==null||R.i>=R.order.length)return;const k=R.order[R.i],q=kqArea(S.kq.area).qs[k];
+  R.pick=oi;if(oi===q.a)R.right++;else R.wrong.push(k);render();
+  const ex=app.querySelector(".kqexp");if(ex)ex.scrollIntoView({block:"nearest",behavior:"smooth"});}
+function kqNext(){const R=S.kq.run;R.i++;R.pick=null;
+  if(R.i>=R.order.length&&!R.retry){const t=R.order.length,o=kqBest[S.kq.area];if(!o||R.right>o.best||o.total!==t){kqBest[S.kq.area]={best:Math.max(R.right,o&&o.total===t?o.best:0),total:t};try{localStorage.setItem(KQ_KEY,JSON.stringify(kqBest));}catch(e){}}}
+  render();scrollTo(0,0);}
+document.addEventListener("keydown",e=>{
+  if(!(S.view==="room"&&S.subject==="sped"&&S.tab==="kq"&&S.kq.run))return;
+  if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+  const R=S.kq.run;if(R.i>=R.order.length)return;
+  if(R.pick===null&&/^[1-4]$/.test(e.key)){e.preventDefault();kqPick(R.opts[R.order[R.i]][+e.key-1]);}
+  else if(R.pick!==null&&e.key==="Enter"&&!(e.target&&e.target.id==="kqNext")){e.preventDefault();kqNext();}
+});
 /* ===== 교육학: 큰 틀만 먼저 (내용은 준비 중) ===== */
 function eduSoon(){
   const T={
