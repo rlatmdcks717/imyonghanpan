@@ -651,7 +651,7 @@ const SUBJECTS=[
   {id:"braille",g:"점",name:"점자",desc:"점자표 · 찍어 보기 · 스테이지",col:"purple"},
   {id:"sign",g:"수",name:"수어",desc:"한글·영어 지문자, 지숫자 · 도감 · 더 배우기",col:"green"}
 ];
-const TABS={edu:[["emind","마인드맵","mind"],["ekey","기출 키워드","cards"],["eq","연습문제","pencil"]],curr:[["cread","총론 읽기","book"],["ctable","시수표 외우기","cards"],["cblank","빈칸 채우기","pencil"]],sign:[["stage","스테이지","path"],["dex","지문자 도감","book"],["more","더 배우기","ext"]],sped:[["mind","마인드맵","mind"],["area","영역별 보기","cards"],["kq","키워드 문제","pencil"],["past","기출문제","file"]],braille:[["stage","스테이지","path"],["chart","점자표","book"],["type","찍어 보기","pencil"]],law:[["read","법 읽기","book"],["cmp","3단 비교","cards"],["blank","빈칸 채우기","pencil"],["exam","연습문제","path"]]};
+const TABS={edu:[["emind","마인드맵","mind"],["ekey","기출 키워드","cards"],["eq","연습문제","pencil"]],curr:[["cread","총론 읽기","book"],["ctable","시수표 외우기","cards"],["cblank","빈칸 채우기","pencil"]],sign:[["stage","스테이지","path"],["dex","지문자 도감","book"],["more","더 배우기","ext"]],sped:[["mind","마인드맵","mind"],["kq","키워드 문제","pencil"],["past","기출문제","file"]],braille:[["stage","스테이지","path"],["chart","점자표","book"],["type","찍어 보기","pencil"]],law:[["read","법 읽기","book"],["cmp","3단 비교","cards"],["blank","빈칸 채우기","pencil"],["exam","연습문제","path"]]};
 
 /* ===== 특수교육학 > 청각장애 샘플 (검토 전) ===== */
 const MCST='문화체육관광부·국립국어원 「보이는 언어 수어에 대해 알려드려요」';
@@ -1728,7 +1728,7 @@ function lobby(){
     </button>`).join("")}</nav>
   <p class="note">시험용 버전이에요. 별과 학습 기록은 이 기기에만 저장돼요.</p>`;
   app.querySelector("#toTitle").onclick=()=>{S.view="title";render();};
-  app.querySelectorAll(".subj:not(.off)").forEach(b=>b.onclick=()=>{S.view="room";S.cat=null;S.subject=b.dataset.s;S.tab=S.subject==="sped"?"past":TABS[S.subject][0][0];resetRoom();render();});
+  app.querySelectorAll(".subj:not(.off)").forEach(b=>b.onclick=()=>{S.view="room";S.cat=null;S.subject=b.dataset.s;S.tab=TABS[S.subject][0][0];resetRoom();render();});
 }
 function resetRoom(){Object.assign(S,{shown:{},idx:0,open:false,fillInput:"",fillResult:null});}
 
