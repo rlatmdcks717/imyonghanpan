@@ -1764,7 +1764,7 @@ function stagePath(){
       <p class="hint">한 판에 ${ROUND}문제, 하트 ${LIVES}개. 정답률 90% 이상이면 별 3개예요.</p>`;
   }
   const cat=(S.subject==="braille"?BCATS:CATS).find(c=>c.id===S.cat);
-  let html=`<button class="crumb" id="catBack">${IC.back}<span>${cat.name}</span></button>`,grp="";
+  let html=`<h2 class="h-big">${cat.name}</h2>`,grp="";
   STAGES.filter(st=>cat.groups.includes(st.grp)).forEach(st=>{
     if(st.grp!==grp){if(grp)html+=`</div>`;grp=st.grp;html+=`${cat.groups.length>1?`<h3 class="group-h">${grp}</h3>`:""}<div class="stages">`;}
     const col=st.locked?null:GROUP_COLOR[st.grp],stars=saved.stars[st.id]||0;
