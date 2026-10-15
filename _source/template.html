@@ -431,7 +431,7 @@ body.has-tts .wrap{padding-bottom:calc(190px + env(safe-area-inset-bottom,0px))}
 .spic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--pink);color:#fff;box-shadow:0 3px 0 var(--pink-d)}
 .spic .i{width:22px!important;height:22px!important;color:#fff!important}
 .sphead{display:flex;flex-direction:column;gap:10px}
-.spback{align-self:flex-start;padding:6px 14px;font-size:14px}
+.spback{display:none} /* 화면 안 뒤로 버튼 대신 왼쪽 위 ‹ 버튼이 한 단계씩 돌아감 */
 .sptools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
 .sppages{display:flex;flex-direction:column;gap:10px;align-self:stretch;width:100%;min-width:0}
 .sppage{border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;width:100%;min-width:0}
@@ -1961,7 +1961,7 @@ const nav=n=>`<div class="row2"><button class="btn ghost" id="prev" ${S.idx===0?
 
 function wireRoom(){
   const $=s=>app.querySelector(s);
-  $("#back").onclick=()=>{if(S.tab==="stage"&&S.cat){S.cat=null;render();}else{S.view="lobby";render();}};
+  $("#back").onclick=()=>{const sb=app.querySelector(".spback");if(sb){sb.click();scrollTo(0,0);return;}if(S.tab==="stage"&&S.cat){S.cat=null;render();}else{S.view="lobby";render();}};
   app.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{S.cat=b.dataset.cat;render();scrollTo(0,0);});
   const cb=$("#catBack");if(cb)cb.onclick=()=>{S.cat=null;render();};
   app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;resetRoom();render();scrollTo(0,0);});
