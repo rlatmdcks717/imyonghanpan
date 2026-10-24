@@ -558,6 +558,11 @@ input.cb.tq{width:5em;text-align:right;margin:0}
 .kqwrong{display:flex;flex-direction:column;gap:8px}
 .kqwrong div{border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.5}
 .kqwrong div em{font-style:normal;font-weight:700;color:var(--green-d)}
+
+.moderow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sqlisten{flex:none;width:44px;height:44px;border:0;border-radius:12px;background:var(--blue);box-shadow:0 3px 0 var(--blue-d);color:#fff;display:grid;place-items:center;padding:0}
+.sqlisten svg{width:22px;height:22px}
+.sqlisten:active{transform:translateY(3px);box-shadow:none}
 /* ===== 다크모드 (오른쪽 위 해/달 버튼으로 전환) ===== */
 .themebtn{flex:none;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:40px;height:40px;border-radius:12px;display:grid;place-items:center;padding:0;box-shadow:0 3px 0 var(--line)}
 .themebtn:active{transform:translateY(3px);box-shadow:none}
@@ -1122,7 +1127,7 @@ function lawRead(){
     <div class="lchips">${ACTORS.map(a=>`<button class="lchip" data-act="${a.id}" aria-pressed="${S.lawOn[a.id]!==false}"><i style="background:${a.col}"></i>${a.name}</button>`).join("")}</div>
     <div class="row2"><button class="btn ghost" id="hlAll">모두 켜기</button><button class="btn ghost" id="hlNone">모두 끄기</button></div>
   </details>
-  ${TTS_OK?`<button class="btn blue" id="listenAll">${IC.speaker} ${D.label} 처음부터 소리로 듣기</button>`:`<div class="ttsno">${IC.speaker} <span><b>지금 연 화면에서는 소리로 듣기가 안 돼요.</b><br>다른 앱(카카오톡, Claude 앱 등) 안에서 열면 이럴 수 있어요. 링크를 복사해서 <b>크롬·삼성 인터넷·사파리</b>로 열면 조문마다 ‘듣기’ 버튼이 생겨요.</span></div>`}
+  ${TTS_OK?"":`<div class="ttsno">${IC.speaker} <span><b>지금 연 화면에서는 소리로 듣기가 안 돼요.</b><br>다른 앱(카카오톡, Claude 앱 등) 안에서 열면 이럴 수 있어요. 링크를 복사해서 <b>크롬·삼성 인터넷·사파리</b>로 열면 조문마다 ‘듣기’ 버튼이 생겨요.</span></div>`}
 `;
   if(q){
     const hits=[];chs.forEach((c,k)=>c.arts.forEach((a,i)=>{if([a.no,a.title,...a.lines].join(" ").includes(q))hits.push({k,i,a});}));
@@ -1133,7 +1138,7 @@ function lawRead(){
     ${!hits.length&&bylHit<0?`<p class="src">‘${esc(q)}’이(가) 들어간 조문이 없어요.</p>`:""}`;
   }
   const body=C.byl?`<section class="sect">${doc==="dec"?bylDecHTML():bylRulHTML()}</section>`:lawArtCard(doc,C.arts[pos.a]);
-  const modeSeg=`<div class="seg modeseg" role="group" aria-label="읽기 방식">${[["read","읽기"],["type","따라 쓰기"]].map(([k,l])=>`<button aria-pressed="${S.lawMode===k}" data-lawmode="${k}">${l}</button>`).join("")}</div>`;
+  const modeSeg=`<div class="moderow"><div class="seg modeseg" role="group" aria-label="읽기 방식">${[["read","읽기"],["type","따라 쓰기"]].map(([k,l])=>`<button aria-pressed="${S.lawMode===k}" data-lawmode="${k}">${l}</button>`).join("")}</div>${TTS_OK&&S.lawMode!=="type"?`<button class="sqlisten" id="listenAll" aria-label="${D.label} 처음부터 소리로 듣기" title="처음부터 소리로 듣기">${IC.speaker}</button>`:""}</div>`;
   let card=body;
   if(S.lawMode==="type"){
     if(C.byl)card=`<p class="src">별표는 표라서 따라 쓰기에서 빼 두었어요. 다른 조를 골라 주세요.</p>`;
@@ -1147,7 +1152,7 @@ function lawRead(){
   <div class="lawswipe" id="lawswipe">${card}</div>
   <div class="lawnav"><button class="btn ghost" id="lawPrev" ${fi<=0?"disabled":""}>‹ 이전</button><span>${fi+1} / ${flat.length}</span><button class="btn" id="lawNext" ${fi>=flat.length-1?"disabled":""}>다음 ›</button></div>
   <p class="src">카드를 옆으로 밀어도 넘어가요.</p>
-  <section class="sect lawtools"><h3>찾기 · 형광펜 · 듣기</h3>${search}${tools}</section>
+  <section class="sect lawtools"><h3>찾기 · 형광펜</h3>${search}${tools}</section>
   <p class="src">${D.src}. 부칙은 넣지 않았어요.${doc==="law"?" 이미 공포되었지만 아직 시행 전인 개정 조문은 ‘개정 예정’으로 따로 표시했어요.":""}</p>`;
 }
 function lawGo(d){
@@ -1421,7 +1426,7 @@ function cuTtsStart(id,no){
 function cuTypeLines(sec){const out=[];sec.lines.forEach(l=>{if(l.k==="tbl"||l.k==="cap")return;if(l.k==="box")out.push(...l.lines);else out.push(l.s);});return out;}
 function currRead(){
   const C=cuCh(S.cu.ch),i=CUCH.indexOf(C);
-  const modeSeg=`<div class="seg modeseg" role="group" aria-label="읽기 방식">${[["read","읽기"],["type","따라 쓰기"]].map(([k,l])=>`<button aria-pressed="${(S.cu.mode||"read")===k}" data-cumode="${k}">${l}</button>`).join("")}</div>`;
+  const modeSeg=`<div class="moderow"><div class="seg modeseg" role="group" aria-label="읽기 방식">${[["read","읽기"],["type","따라 쓰기"]].map(([k,l])=>`<button aria-pressed="${(S.cu.mode||"read")===k}" data-cumode="${k}">${l}</button>`).join("")}</div>${TTS_OK&&S.cu.mode!=="type"?`<button class="sqlisten" id="cuListenAll" aria-label="이 단원 처음부터 소리로 듣기" title="처음부터 소리로 듣기">${IC.speaker}</button>`:""}</div>`;
   if(S.cu.mode==="type"){
     const secs=C.secs;if(!(S.cu.tsec<secs.length))S.cu.tsec=0;const sec=secs[S.cu.tsec];
     tySet("cu-"+C.id+"-"+S.cu.tsec,cuTypeLines(sec));
@@ -1433,7 +1438,7 @@ function currRead(){
   }
   return `<div class="lbtop">${cuChSelect("cuch1","ch")}</div>${modeSeg}
   <div><h2 class="h-big">${esc(C.name)}</h2><p class="src">${esc(CUR.src)}</p></div>
-  ${TTS_OK?`<button class="btn blue" id="cuListenAll">${IC.speaker} 이 단원 처음부터 소리로 듣기</button>`:`<div class="ttsno">${IC.speaker} <span><b>지금 연 화면에서는 소리로 듣기가 안 돼요.</b><br>다른 앱(카카오톡, Claude 앱 등) 안에서 열면 이럴 수 있어요. 링크를 복사해서 <b>크롬·삼성 인터넷·사파리</b>로 열면 들을 수 있어요.</span></div>`}
+  ${TTS_OK?"":`<div class="ttsno">${IC.speaker} <span><b>지금 연 화면에서는 소리로 듣기가 안 돼요.</b><br>다른 앱(카카오톡, Claude 앱 등) 안에서 열면 이럴 수 있어요. 링크를 복사해서 <b>크롬·삼성 인터넷·사파리</b>로 열면 들을 수 있어요.</span></div>`}
   ${C.intro?`<div class="lart cbwrap" id="cuart-intro">${TTS_OK?`<header><b>단원 안내</b><button class="listen" data-culisten="intro" aria-label="단원 안내 소리로 듣기">${IC.speaker}듣기</button></header>`:""}${cuBox(C.intro)}</div>`:""}
   ${C.secs.length>1?`<div class="chips jump">${C.secs.map((s,k)=>`<a href="#cu-${k}" data-cujump="cu-${k}">${esc(s.h)}</a>`).join("")}</div>`:""}
   ${C.secs.map((s,k)=>`<section class="sect" id="cu-${k}">${s.h?`<h3>${esc(s.h)}</h3>`:""}<article class="lart cart" id="cuart-${k}">${TTS_OK?`<header class="cuhd"><button class="listen" data-culisten="s${k}" aria-label="${esc(s.h||"이 부분")} 소리로 듣기">${IC.speaker}듣기</button></header>`:""}${cuLines(s.lines)}</article></section>`).join("")}
